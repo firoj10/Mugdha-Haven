@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About",
+    "cart": "Cart",
+    "openMenu": "Open menu",
+    "tagline": "Imported Baby Care & Cosmetics"
+  },
+  "hero": {
+    "eyebrow": "Imported · Authentic · Gentle",
+    "title": "Pure care for your little one's skin",
+    "subtitle": "Hand-picked baby care and cosmetics, imported from the world's most trusted brands — gentle enough for the most delicate skin.",
+    "cta": "Shop the collection",
+    "ctaSecondary": "Our story"
+  },
+  "featured": {
+    "eyebrow": "Best sellers",
+    "title": "Customer favourites",
+    "subtitle": "Top-rated essentials loved by families across the country."
+  },
+  "categories": {
+    "eyebrow": "Browse",
+    "title": "Shop by category",
+    "subtitle": "Find exactly what your skin routine needs.",
+    "shopAll": "Shop all"
+  },
+  "benefits": {
+    "eyebrow": "Why Mugdha Haven",
+    "title": "Care you can trust",
+    "authentic": {
+      "title": "100% Authentic",
+      "desc": "Every product is imported and verified — never counterfeit."
+    },
+    "gentle": {
+      "title": "Gentle formulas",
+      "desc": "Dermatologically mindful, made for delicate and sensitive skin."
+    },
+    "delivery": {
+      "title": "Fast delivery",
+      "desc": "Nationwide shipping with careful, protective packaging."
+    },
+    "support": {
+      "title": "24/7 support",
+      "desc": "Real people ready to help you choose the right care."
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Loved by parents",
+    "title": "What our customers say",
+    "q1": "The Aveeno baby lotion is the only thing that keeps my daughter's skin soft all winter. Arrived sealed and genuine.",
+    "q2": "Finally a shop I can trust for authentic Korean skincare. The snail essence is the real deal and delivery was quick.",
+    "q3": "Beautiful packaging, gentle products, and support that actually replies. Mugdha Haven has my full trust."
+  },
+  "newsletter": {
+    "title": "Join the Mugdha Haven family",
+    "subtitle": "Get early access to new arrivals and gentle-care tips.",
+    "placeholder": "Your email address",
+    "button": "Subscribe",
+    "success": "Thank you — you're on the list!"
+  },
+  "shop": {
+    "title": "The collection",
+    "subtitle": "Authentic imported baby care & cosmetics.",
+    "all": "All",
+    "empty": "No products in this category yet."
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "added": "Added",
+    "sale": "Sale",
+    "description": "Description",
+    "readIn": "Read in",
+    "related": "You may also like",
+    "from": "Price",
+    "category": "Category",
+    "rating": "Rating",
+    "back": "Back to shop"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty.",
+    "continue": "Continue shopping",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "qty": "Qty",
+    "note": "Checkout connects to the backend later — this is a front-end preview."
+  },
+  "about": {
+    "title": "Our story",
+    "lead": "Mugdha Haven was born from a simple wish: safe, gentle, genuine care for the people we love most.",
+    "body1": "We import baby care and cosmetics only from brands we trust, verifying authenticity on every order. No counterfeits, no compromises — just the gentle formulas your family deserves.",
+    "body2": "From first-time parents to skincare lovers, our mission is the same: bring the world's most trusted products to your doorstep, with care at every step.",
+    "contactTitle": "Get in touch",
+    "contactSubtitle": "Questions about a product or your order? We'd love to help.",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone"
+  },
+  "footer": {
+    "tagline": "Imported baby care & cosmetics you can trust.",
+    "categories": "Categories",
+    "links": "Useful links",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "madeWith": "Gentle care, delivered."
+  },
+  "common": {
+    "loading": "Loading…"
+  },
+  "site": {
+    "topbarShipping": "Authentic imported baby care — delivered across Bangladesh",
+    "login": "Login",
+    "favTitle": "Our Customer Favorite Products",
+    "favSubtitle": "Loved by families — the essentials our customers reorder again and again.",
+    "bestTitle": "Our Best Selling Products",
+    "guidesTitle": "How to Identify Original Products",
+    "guidesText": "Learn the simple checks that tell a genuine imported product from a counterfeit.",
+    "guidesCta": "View All Guides",
+    "viewAll": "View all",
+    "feat1": "Fast Delivery",
+    "feat1d": "Careful, protective packaging shipped nationwide.",
+    "feat2": "Dedicated Customer Support",
+    "feat2d": "Real people ready to help you choose.",
+    "feat3": "Online Support (24/7)",
+    "feat3d": "Reach us any time, any day.",
+    "feat4": "Flexible Payment",
+    "feat4d": "Cash on delivery and mobile payments.",
+    "subscribe": "Subscribe us",
+    "subscribeText": "New arrivals and gentle-care tips in your inbox.",
+    "delivery": "Delivery & Return",
+    "contacts": "Our contacts",
+    "blog": "Blog",
+    "stores": "Stores",
+    "menu": "Footer Menu",
+    "slide1t": "Look Good. Feel Confident.",
+    "slide1s": "Natural care for healthy skin",
+    "slide2t": "Authentic Korean skincare",
+    "slide2s": "Verified on every order",
+    "slide3t": "Gentle care, trusted brands",
+    "slide3s": "Made for delicate skin",
+    "banner1": "New Arrivals",
+    "banner2": "Baby Care",
+    "banner3": "Skincare",
+    "search": "Search for products",
+    "register": "Register",
+    "bestBtn": "Best selling products",
+    "shopNow": "Shop Now",
+    "favorites": "Favorites",
+    "favEmpty": "Your favorites list is empty. Tap the heart on any product to save it here.",
+    "quickView": "Quick view",
+    "viewDetails": "View full details"
+  }
+}

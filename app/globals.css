@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   COLOR SYSTEM — change colors ONLY here.
+   Values are space-separated RGB channels so Tailwind opacity
+   utilities (bg-primary/50) keep working.
+   ============================================================ */
+@layer base {
+  :root {
+    /* 1) Brand palette (from the palette image) */
+    --palette-beige: 244 239 231; /* #F4EFE7 */
+    --palette-brown: 132 117 99; /* #847563 */
+    --palette-black: 41 41 41; /* #292929 */
+    --palette-cream: 216 199 178; /* #D8C7B2 */
+    --palette-white: 255 255 255;
+
+    /* 2) Semantic tokens (what components use) */
+    --background: var(--palette-beige);
+    --foreground: var(--palette-black);
+    --card: var(--palette-beige);
+    --card-foreground: var(--palette-black);
+    --primary: var(--palette-brown);
+    --primary-foreground: var(--palette-beige);
+    --secondary: var(--palette-cream);
+    --secondary-foreground: var(--palette-black);
+    --muted: var(--palette-cream);
+    --muted-foreground: var(--palette-brown);
+    --accent: var(--palette-cream);
+    --accent-foreground: var(--palette-black);
+    --border: var(--palette-cream);
+    --input: var(--palette-cream);
+    --ring: var(--palette-brown);
+
+    /* Layout bars */
+    --topbar: var(--palette-black);
+    --topbar-foreground: var(--palette-beige);
+    --footer: var(--palette-black);
+    --footer-foreground: var(--palette-beige);
+    --overlay: var(--palette-black);
+
+    --radius: 0.5rem;
+
+    /* Reference-style extras */
+    --price: var(--palette-brown);
+    --cta: var(--palette-black); /* dark Add-to-cart / header buttons */
+    --cta-foreground: var(--palette-beige);
+    --section-alt: var(--palette-cream); /* tinted section band */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image: linear-gradient(180deg, rgb(var(--palette-beige)) 0%, rgb(var(--palette-cream) / 0.75) 100%);
+    background-attachment: fixed;
+    text-rendering: optimizeLegibility;
+  }
+  /* Bangla locale swaps the body font family */
+  body[data-lang="bn"] {
+    font-family: var(--font-bangla), sans-serif;
+  }
+  h1, h2, h3 {
+    @apply font-sans;
+  }
+  body[data-lang="bn"] h1,
+  body[data-lang="bn"] h2,
+  body[data-lang="bn"] h3 {
+    font-family: var(--font-bangla), sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Perspective wrapper for 3D product tilt / card flip */
+  .perspective {
+    perspective: 1000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* Respect reduced-motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Shimmer on the "Best selling" pill (reference: .fusion-offer) */
+.fusion-offer {
+  position: relative;
+  overflow: hidden;
+}
+.fusion-offer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgb(var(--palette-cream) / 0.3), transparent);
+  animation: moveBg 2.5s linear infinite;
+}
+.fusion-offer > * { position: relative; z-index: 1; }
+@keyframes moveBg {
+  to { transform: translateX(50%); }
+}
+
+/* ============================================================
+   Product stage: natural stone podium + deep brand gradient.
+   Colors come from the palette variables above.
+   ============================================================ */
+.stage {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 38%, rgb(var(--palette-beige) / 0.85), transparent 60%),
+    linear-gradient(180deg, rgb(var(--palette-cream)) 0%, rgb(var(--palette-brown) / 0.55) 100%);
+}
+.stone-noise {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .35  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.stone-slab {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 86%;
+  height: 24%;
+  transform: translateX(-50%);
+}
+.stone-slab .body {
+  position: absolute;
+  inset: 22% 0 0 0;
+  border-radius: 0 0 50% 50% / 0 0 55% 55%;
+  background-color: rgb(var(--palette-cream));
+  background-image:
+    linear-gradient(90deg, rgb(var(--palette-brown) / 0.75), rgb(var(--palette-cream) / 0) 30%, rgb(var(--palette-cream) / 0) 65%, rgb(var(--palette-brown) / 0.8)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .35  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  box-shadow: 0 10px 18px -6px rgb(var(--palette-black) / 0.35);
+}
+.stone-slab .top {
+  position: absolute;
+  inset: 0 0 38% 0;
+  border-radius: 50%;
+  background-color: rgb(var(--palette-beige));
+  background-image:
+    radial-gradient(ellipse at 50% 40%, rgb(var(--palette-beige)), rgb(var(--palette-cream)) 85%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='3'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .4  0 0 0 0 .35  0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-blend-mode: normal;
+}
+.stone-rock {
+  position: absolute;
+  background-color: rgb(var(--palette-cream));
+  background-image:
+    linear-gradient(135deg, rgb(var(--palette-beige) / 0.9), rgb(var(--palette-brown) / 0.55)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 .4  0 0 0 0 .35  0 0 0 0 .3  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  box-shadow: 0 6px 10px -3px rgb(var(--palette-black) / 0.35);
+}
