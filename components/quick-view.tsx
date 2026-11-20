@@ -123,7 +123,7 @@ export function QuickView({
 
                 <button
                   onClick={addToCart}
-                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-sm bg-cta text-[13px] font-bold uppercase tracking-[0.12em] text-cta-foreground transition hover:bg-cta/90"
+                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-cta text-sm font-semibold text-cta-foreground transition hover:bg-highlight hover:text-highlight-foreground"
                 >
                   {done ? <Check className="size-4" /> : <ShoppingBag className="size-4" />}
                   {done ? t("added") : t("addToCart")}
