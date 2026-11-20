@@ -12,7 +12,7 @@ export function Footer() {
   const list = "space-y-2 text-sm text-footer-foreground/60";
   const a = "transition hover:text-secondary";
   const social =
-    "flex size-9 items-center justify-center rounded-full bg-footer-foreground/10 transition hover:bg-secondary/20 hover:text-secondary";
+    "flex size-9 items-center justify-center rounded-sm bg-footer-foreground/10 transition hover:bg-secondary/20 hover:text-secondary";
 
   return (
     <footer className="bg-footer text-footer-foreground">
@@ -56,11 +56,11 @@ export function Footer() {
               <input
                 type="email"
                 placeholder={t("newsletter.placeholder")}
-                className="h-10 w-full rounded-l-md bg-footer-foreground/10 px-3 text-sm outline-none placeholder:text-footer-foreground/50"
+                className="h-10 w-full rounded-l-sm bg-footer-foreground/10 px-3 text-sm outline-none placeholder:text-footer-foreground/50"
               />
               <button
                 type="submit"
-                className="h-10 rounded-r-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                className="h-10 rounded-r-sm bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
               >
                 {t("newsletter.button")}
               </button>

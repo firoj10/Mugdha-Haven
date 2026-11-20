@@ -17,7 +17,7 @@ export default async function ShopPage() {
 
   return (
     <div className="container py-16">
-      <h1 className="font-serif text-3xl font-semibold sm:text-4xl">
+      <h1 className="font-serif text-4xl font-semibold tracking-wide">
         {t("title")}
       </h1>
       <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>

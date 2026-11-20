@@ -50,12 +50,12 @@ export function QuickView({
           <div className="relative bg-secondary/40 p-4 md:p-6">
             <ProductImage
               product={product}
-              className="aspect-square w-full rounded-2xl"
+              className="aspect-square w-full rounded-sm"
               priority
               sizes="(max-width: 768px) 100vw, 480px"
             />
             {off > 0 && (
-              <span className="absolute left-7 top-7 rounded-full bg-cta px-3 py-1 text-xs font-bold text-cta-foreground">
+              <span className="absolute left-7 top-7 rounded-sm bg-highlight px-3 py-1 text-xs font-bold text-highlight-foreground">
                 -{off}%
               </span>
             )}
@@ -79,7 +79,7 @@ export function QuickView({
                     className={cn(
                       "size-4",
                       n <= Math.round(product.rating)
-                        ? "fill-primary text-primary"
+                        ? "fill-highlight text-highlight"
                         : "text-border"
                     )}
                   />
@@ -103,11 +103,11 @@ export function QuickView({
 
             <div className="mt-auto flex flex-col gap-3 pt-2">
               <div className="flex items-center gap-3">
-                <div className="flex items-center rounded-full border border-border bg-card">
+                <div className="flex items-center rounded-sm border border-border bg-card">
                   <button
                     aria-label="Decrease"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
-                    className="flex size-10 items-center justify-center rounded-full transition hover:bg-secondary/60"
+                    className="flex size-10 items-center justify-center rounded-sm transition hover:bg-secondary/60"
                   >
                     <Minus className="size-4" />
                   </button>
@@ -115,7 +115,7 @@ export function QuickView({
                   <button
                     aria-label="Increase"
                     onClick={() => setQty((q) => q + 1)}
-                    className="flex size-10 items-center justify-center rounded-full transition hover:bg-secondary/60"
+                    className="flex size-10 items-center justify-center rounded-sm transition hover:bg-secondary/60"
                   >
                     <Plus className="size-4" />
                   </button>
@@ -123,7 +123,7 @@ export function QuickView({
 
                 <button
                   onClick={addToCart}
-                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-cta text-sm font-semibold text-cta-foreground transition hover:bg-cta/90"
+                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-sm bg-cta text-[13px] font-bold uppercase tracking-[0.12em] text-cta-foreground transition hover:bg-cta/90"
                 >
                   {done ? <Check className="size-4" /> : <ShoppingBag className="size-4" />}
                   {done ? t("added") : t("addToCart")}
@@ -134,7 +134,7 @@ export function QuickView({
                   aria-pressed={fav}
                   onClick={() => toggle(product.id)}
                   className={cn(
-                    "flex size-12 shrink-0 items-center justify-center rounded-full border transition",
+                    "flex size-12 shrink-0 items-center justify-center rounded-sm border transition",
                     fav
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border bg-card hover:border-primary"

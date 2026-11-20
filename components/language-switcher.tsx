@@ -35,7 +35,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-full border border-primary/30 p-0.5 text-xs font-medium",
+        "inline-flex items-center rounded-sm border border-primary/30 p-0.5 text-xs font-medium",
         className
       )}
     >
@@ -45,7 +45,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           onClick={() => set(l.code)}
           aria-pressed={locale === l.code}
           className={cn(
-            "rounded-full px-3 py-1 transition",
+            "rounded-sm px-3 py-1 transition",
             locale === l.code
               ? "bg-primary text-primary-foreground"
               : "text-foreground/70 hover:text-foreground"

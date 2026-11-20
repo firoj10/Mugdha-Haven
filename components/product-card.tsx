@@ -33,7 +33,7 @@ const S: Record<
 > = {
   lg: {
     img: "aspect-square",
-    pad: "px-3 pb-2 pt-4",
+    pad: "px-4 pb-4 pt-4",
     name: "text-base",
     price: "text-xl",
     btn: "h-11 text-sm",
@@ -42,7 +42,7 @@ const S: Record<
   },
   md: {
     img: "aspect-square",
-    pad: "px-2.5 pb-1.5 pt-3",
+    pad: "px-3.5 pb-3.5 pt-3",
     name: "text-sm",
     price: "text-lg",
     btn: "h-10 text-sm",
@@ -51,7 +51,7 @@ const S: Record<
   },
   sm: {
     img: "aspect-[4/3]",
-    pad: "px-2 pb-1 pt-2.5",
+    pad: "px-3 pb-3 pt-2.5",
     name: "text-[13px]",
     price: "text-base",
     btn: "h-9 text-xs",
@@ -82,15 +82,15 @@ export function ProductCard({
 
   // Hover action: slides in from the right, staggered. Always visible on touch.
   const action = cn(
-    "flex items-center justify-center rounded-full bg-card text-foreground shadow-lg shadow-foreground/20 transition-all duration-300 hover:bg-cta hover:text-cta-foreground md:translate-x-3 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100",
+    "flex items-center justify-center rounded-sm bg-card text-foreground shadow-md shadow-foreground/15 transition-all duration-300 hover:bg-cta hover:text-cta-foreground md:translate-x-3 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100",
     s.icon
   );
 
   return (
     <Reveal delay={(index % 4) * 0.06} className="h-full">
-      <article className="group flex h-full flex-col rounded-3xl border border-foreground/10 bg-card p-2 transition-all duration-500 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-xl hover:shadow-foreground/10">
+      <article className="group flex h-full flex-col overflow-hidden rounded-md border border-border bg-card transition-all duration-500 hover:-translate-y-1 hover:border-foreground/30 hover:shadow-xl hover:shadow-foreground/10">
         {/* Image */}
-        <div className="relative overflow-hidden rounded-2xl bg-secondary/40">
+        <div className="relative overflow-hidden bg-secondary/40">
           <Link
             href={`/product/${product.slug}`}
             aria-label={product.name}
@@ -103,7 +103,7 @@ export function ProductCard({
           </Link>
 
           {off > 0 && (
-            <span className="absolute left-2.5 top-2.5 rounded-full bg-cta px-2.5 py-1 text-[11px] font-bold text-cta-foreground">
+            <span className="absolute left-0 top-3 rounded-r-md bg-highlight px-3 py-1 text-[11px] font-bold tracking-wider text-highlight-foreground">
               -{off}%
             </span>
           )}
@@ -152,7 +152,7 @@ export function ProductCard({
               {s.showCat && <span className="font-medium normal-case tracking-normal"> · {product.category}</span>}
             </span>
             <span className="flex shrink-0 items-center gap-1 text-xs font-medium">
-              <Star className="size-3 fill-current" />
+              <Star className="size-3 fill-highlight text-highlight" />
               {product.rating}
             </span>
           </div>
@@ -182,7 +182,7 @@ export function ProductCard({
             product={product}
             size="sm"
             className={cn(
-              "mt-auto w-full rounded-full bg-cta font-semibold text-cta-foreground transition-colors hover:bg-cta/85",
+              "mt-auto w-full rounded-sm border border-cta bg-transparent text-cta transition-colors hover:bg-cta hover:text-cta-foreground",
               s.btn
             )}
           />

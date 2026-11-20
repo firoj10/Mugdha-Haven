@@ -15,18 +15,13 @@ export async function FeaturedProducts({
   return (
     <section className={fav ? "bg-secondary/50" : ""}>
       <div className="container py-10 sm:py-14">
-        <div className="mb-8 text-center">
-          <h2
-            className={`font-sans uppercase ${
-              fav
-                ? "text-2xl font-bold"
-                : "text-xl font-black tracking-wide md:text-3xl"
-            }`}
-          >
+        <div className="mb-10 text-center">
+          <h2 className="font-serif text-3xl font-semibold tracking-wide sm:text-4xl">
             {fav ? t("favTitle") : t("bestTitle")}
           </h2>
+          <span className="mx-auto mt-4 block h-px w-14 bg-highlight" />
           {fav && (
-            <p className="mt-1 text-sm font-bold sm:text-[15px]">{t("favSubtitle")}</p>
+            <p className="mt-4 text-sm text-foreground/75">{t("favSubtitle")}</p>
           )}
         </div>
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">

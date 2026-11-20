@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Flame, Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { Flame, Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
+import { CategoryBar } from "@/components/category-bar";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import {
   Sheet,
@@ -18,15 +19,16 @@ import {
 import { cn } from "@/lib/utils";
 
 const LINKS = [
-  { href: "/", key: "home" },
   { href: "/shop", key: "shop" },
   { href: "/about", key: "about" },
 ] as const;
 
 const iconBtn =
-  "relative flex size-10 items-center justify-center rounded-full text-topbar-foreground transition-colors hover:bg-topbar-foreground/15";
+  "relative flex size-10 items-center justify-center text-topbar-foreground/90 transition-colors hover:text-highlight";
 const badge =
-  "absolute right-0 top-0 flex size-4 items-center justify-center rounded-full bg-secondary text-[9px] font-bold text-secondary-foreground";
+  "absolute right-0.5 top-0.5 flex size-4 items-center justify-center bg-highlight text-[9px] font-bold text-highlight-foreground";
+const navLink =
+  "group relative py-2 text-[12px] font-semibold uppercase tracking-[0.2em] transition-colors";
 
 export function Navbar() {
   const t = useTranslations("nav");
@@ -54,161 +56,193 @@ export function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-40 px-3 pt-3 sm:px-5">
-      <div
+    <>
+      <header
         className={cn(
-          "mx-auto flex h-16 max-w-[88rem] items-center gap-3 rounded-full border px-3 backdrop-blur-xl transition-all duration-300 sm:px-4",
-          scrolled
-            ? "border-topbar-foreground/20 bg-topbar shadow-xl shadow-foreground/30"
-            : "border-topbar-foreground/15 bg-topbar shadow-md"
+          "sticky top-0 z-40 border-b border-topbar-foreground/10 bg-topbar/95 backdrop-blur transition-shadow duration-300",
+          scrolled && "shadow-lg shadow-foreground/25"
         )}
       >
-        {/* Logo with monogram */}
-        <Link href="/" aria-label="Mugdha Haven home" className="flex shrink-0 items-center gap-2.5">
-          <span className="flex size-10 items-center justify-center rounded-full bg-secondary font-serif text-lg font-bold text-secondary-foreground">
-            M
-          </span>
-          <span className="hidden flex-col leading-none sm:flex">
-            <span className="font-sans text-base font-bold tracking-tight text-topbar-foreground">
-              Mugdha <span className="text-secondary">Haven</span>
+        <div className="container flex h-[72px] items-center gap-8">
+          {/* Logo: square monogram + serif wordmark */}
+          <Link
+            href="/"
+            aria-label="Mugdha Haven home"
+            className="flex shrink-0 items-center gap-3"
+          >
+            <span className="flex size-10 items-center justify-center rounded-sm border border-secondary font-serif text-xl font-semibold text-secondary">
+              M
             </span>
-            <span className="mt-1 text-[9px] uppercase tracking-[0.2em] text-topbar-foreground/70">
-              {t("tagline")}
+            <span className="hidden flex-col leading-none sm:flex">
+              <span className="font-serif text-2xl font-semibold tracking-wide text-topbar-foreground">
+                Mugdha <span className="text-secondary">Haven</span>
+              </span>
+              <span className="mt-1.5 text-[9px] uppercase tracking-[0.3em] text-topbar-foreground/60">
+                {t("tagline")}
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
 
-        {/* Center: links (or search when open) */}
-        <div className="relative mx-auto hidden h-10 flex-1 items-center justify-center lg:flex">
-          {searchOpen ? (
-            <form action="/shop" className="flex w-full max-w-xl items-center gap-2 rounded-full bg-topbar-foreground/15 px-4">
-              <Search className="size-4 text-topbar-foreground/80" />
-              <input
-                ref={inputRef}
-                name="q"
-                autoComplete="off"
-                placeholder={ts("search")}
-                className="h-10 w-full bg-transparent text-sm text-topbar-foreground outline-none placeholder:text-topbar-foreground/60"
-                onKeyDown={(e) => e.key === "Escape" && setSearchOpen(false)}
-              />
-              <button type="button" aria-label="Close search" onClick={() => setSearchOpen(false)}>
-                <X className="size-4 text-topbar-foreground/80 hover:text-topbar-foreground" />
-              </button>
-            </form>
-          ) : (
-            <nav className="flex items-center gap-1 rounded-full bg-topbar-foreground/10 p-1">
-              {LINKS.map((l) => (
+          {/* Center: links (or search) */}
+          <div className="mx-auto hidden h-10 flex-1 items-center justify-center lg:flex">
+            {searchOpen ? (
+              <form
+                action="/shop"
+                className="flex w-full max-w-xl items-center gap-3 border-b border-secondary"
+              >
+                <Search className="size-4 text-topbar-foreground/70" />
+                <input
+                  ref={inputRef}
+                  name="q"
+                  autoComplete="off"
+                  placeholder={ts("search")}
+                  className="h-10 w-full bg-transparent text-sm tracking-wide text-topbar-foreground outline-none placeholder:text-topbar-foreground/50"
+                  onKeyDown={(e) => e.key === "Escape" && setSearchOpen(false)}
+                />
+                <button
+                  type="button"
+                  aria-label="Close search"
+                  onClick={() => setSearchOpen(false)}
+                >
+                  <X className="size-4 text-topbar-foreground/70 hover:text-topbar-foreground" />
+                </button>
+              </form>
+            ) : (
+              <nav className="flex items-center gap-10">
+                {LINKS.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className={cn(
+                      navLink,
+                      isActive(l.href)
+                        ? "text-topbar-foreground"
+                        : "text-topbar-foreground/70 hover:text-topbar-foreground"
+                    )}
+                  >
+                    {t(l.key)}
+                    <span
+                      className={cn(
+                        "absolute inset-x-0 bottom-0 h-px origin-left bg-highlight transition-transform duration-300",
+                        isActive(l.href)
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      )}
+                    />
+                  </Link>
+                ))}
                 <Link
-                  key={l.href}
-                  href={l.href}
+                  href="/shop"
                   className={cn(
-                    "rounded-full px-5 py-1.5 text-sm font-medium transition-all",
-                    isActive(l.href)
-                      ? "bg-secondary text-secondary-foreground shadow"
-                      : "text-topbar-foreground hover:bg-topbar-foreground/15"
+                    navLink,
+                    "flex items-center gap-1.5 text-highlight hover:text-highlight/80"
                   )}
                 >
-                  {t(l.key)}
+                  <Flame className="size-3.5" />
+                  {ts("bestBtn")}
+                  <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-highlight transition-transform duration-300 group-hover:scale-x-100" />
                 </Link>
-              ))}
-              <Link
-                href="/shop"
-                className="fusion-offer ml-1 flex items-center gap-1.5 rounded-full border border-secondary px-4 py-1.5 text-sm font-semibold text-secondary"
-              >
-                <Flame className="size-3.5" />
-                {ts("bestBtn")}
-              </Link>
-            </nav>
-          )}
-        </div>
+              </nav>
+            )}
+          </div>
 
-        {/* Right actions */}
-        <div className="ml-auto flex items-center gap-1 lg:ml-0">
-          <button
-            aria-label="Search"
-            onClick={() => setSearchOpen((v) => !v)}
-            className={cn(iconBtn, "hidden lg:flex")}
-          >
-            <Search className="size-[18px]" />
-          </button>
-          <Link href="/shop" aria-label="Search" className={cn(iconBtn, "lg:hidden")}>
-            <Search className="size-[18px]" />
-          </Link>
-          <button
-            aria-label={ts("favorites")}
-            title={ts("favorites")}
-            onClick={() => wish.setOpen(true)}
-            className={cn(iconBtn, "hidden sm:flex")}
-          >
-            <Heart className="size-[18px]" />
-            {mounted && wish.count > 0 && <span className={badge}>{wish.count}</span>}
-          </button>
-          <Link href="/cart" aria-label={t("cart")} className={iconBtn}>
-            <ShoppingBag className="size-[18px]" />
-            {mounted && count > 0 && <span className={badge}>{count}</span>}
-          </Link>
+          {/* Right actions */}
+          <div className="ml-auto flex items-center gap-1 lg:ml-0">
+            <button
+              aria-label="Search"
+              onClick={() => setSearchOpen((v) => !v)}
+              className={cn(iconBtn, "hidden lg:flex")}
+            >
+              <Search className="size-[18px]" />
+            </button>
+            <Link href="/shop" aria-label="Search" className={cn(iconBtn, "lg:hidden")}>
+              <Search className="size-[18px]" />
+            </Link>
+            <button
+              aria-label={ts("favorites")}
+              title={ts("favorites")}
+              onClick={() => wish.setOpen(true)}
+              className={cn(iconBtn, "hidden sm:flex")}
+            >
+              <Heart className="size-[18px]" />
+              {mounted && wish.count > 0 && <span className={badge}>{wish.count}</span>}
+            </button>
+            <Link href="/cart" aria-label={t("cart")} className={iconBtn}>
+              <ShoppingBag className="size-[18px]" />
+              {mounted && count > 0 && <span className={badge}>{count}</span>}
+            </Link>
 
-          <span className="mx-1 hidden h-6 w-px bg-topbar-foreground/25 lg:block" />
-          <Link
-            href="/cart"
-            className="hidden items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-topbar-foreground transition hover:text-secondary lg:flex"
-          >
-            <User className="size-4" /> {ts("login")}
-          </Link>
-          <Link
-            href="/cart"
-            className="hidden rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground transition hover:bg-secondary/85 lg:block"
-          >
-            {ts("register")}
-          </Link>
+            <span className="mx-3 hidden h-6 w-px bg-topbar-foreground/20 lg:block" />
+            <Link
+              href="/cart"
+              className="hidden px-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-topbar-foreground/90 transition hover:text-highlight lg:block"
+            >
+              {ts("login")}
+            </Link>
+            <Link
+              href="/cart"
+              className="ml-2 hidden h-10 items-center rounded-sm bg-highlight px-6 text-[12px] font-bold uppercase tracking-[0.2em] text-highlight-foreground transition hover:bg-highlight/85 lg:flex"
+            >
+              {ts("register")}
+            </Link>
 
-          {/* Mobile menu */}
-          <Sheet>
-            <SheetTrigger asChild>
-              <button aria-label={t("openMenu")} className={cn(iconBtn, "lg:hidden")}>
-                <Menu className="size-5" />
-              </button>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetTitle className="font-sans text-lg font-bold">Mugdha Haven</SheetTitle>
-              <div className="flex flex-col gap-1">
-                {LINKS.map((l) => (
-                  <SheetClose asChild key={l.href}>
+            {/* Mobile menu */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <button aria-label={t("openMenu")} className={cn(iconBtn, "lg:hidden")}>
+                  <Menu className="size-5" />
+                </button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetTitle className="font-serif text-2xl font-semibold tracking-wide">
+                  Mugdha Haven
+                </SheetTitle>
+                <div className="flex flex-col">
+                  {LINKS.map((l) => (
+                    <SheetClose asChild key={l.href}>
+                      <Link
+                        href={l.href}
+                        className={cn(
+                          "border-b border-border py-3 text-[13px] font-semibold uppercase tracking-[0.2em] transition-colors",
+                          isActive(l.href) ? "text-foreground" : "text-foreground/70"
+                        )}
+                      >
+                        {t(l.key)}
+                      </Link>
+                    </SheetClose>
+                  ))}
+                  <SheetClose asChild>
                     <Link
-                      href={l.href}
-                      className={cn(
-                        "rounded-full px-4 py-2.5 text-base font-medium transition-colors",
-                        isActive(l.href)
-                          ? "bg-cta text-cta-foreground"
-                          : "hover:bg-secondary/60"
-                      )}
+                      href="/shop"
+                      className="flex items-center gap-2 border-b border-border py-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-highlight"
                     >
-                      {t(l.key)}
+                      <Flame className="size-4" /> {ts("bestBtn")}
                     </Link>
                   </SheetClose>
-                ))}
-                <SheetClose asChild>
+                </div>
+                <div className="flex gap-2">
                   <Link
-                    href="/shop"
-                    className="fusion-offer mt-2 flex items-center gap-2 rounded-full bg-cta px-4 py-2.5 text-base font-semibold text-cta-foreground"
+                    href="/cart"
+                    className="flex-1 rounded-sm border border-foreground py-2.5 text-center text-xs font-bold uppercase tracking-[0.2em]"
                   >
-                    <Flame className="size-4" /> {ts("bestBtn")}
+                    {ts("login")}
                   </Link>
-                </SheetClose>
-              </div>
-              <div className="flex gap-2 pt-2">
-                <Link href="/cart" className="flex-1 rounded-full border border-border py-2 text-center text-sm font-medium">
-                  {ts("login")}
-                </Link>
-                <Link href="/cart" className="flex-1 rounded-full bg-cta py-2 text-center text-sm font-semibold text-cta-foreground">
-                  {ts("register")}
-                </Link>
-              </div>
-              <LanguageSwitcher />
-            </SheetContent>
-          </Sheet>
+                  <Link
+                    href="/cart"
+                    className="flex-1 rounded-sm bg-cta py-2.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-cta-foreground"
+                  >
+                    {ts("register")}
+                  </Link>
+                </div>
+                <LanguageSwitcher />
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      <Suspense fallback={null}>
+        <CategoryBar />
+      </Suspense>
+    </>
   );
 }

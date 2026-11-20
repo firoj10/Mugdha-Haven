@@ -46,6 +46,10 @@ const config: Config = {
         },
         price: "rgb(var(--price) / <alpha-value>)",
         alt: "rgb(var(--section-alt) / <alpha-value>)",
+        highlight: {
+          DEFAULT: "rgb(var(--highlight) / <alpha-value>)",
+          foreground: "rgb(var(--highlight-foreground) / <alpha-value>)",
+        },
         overlay: "rgb(var(--overlay) / <alpha-value>)",
         card: {
           DEFAULT: "rgb(var(--card) / <alpha-value>)",

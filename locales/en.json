@@ -149,6 +149,7 @@
     "favorites": "Favorites",
     "favEmpty": "Your favorites list is empty. Tap the heart on any product to save it here.",
     "quickView": "Quick view",
-    "viewDetails": "View full details"
+    "viewDetails": "View full details",
+    "categoriesMenu": "Categories"
   }
 }

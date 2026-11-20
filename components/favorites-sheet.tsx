@@ -22,21 +22,21 @@ export function FavoritesSheet() {
         <SheetTitle className="flex items-center gap-2 font-sans text-lg font-bold">
           <Heart className="size-5 fill-primary text-primary" />
           {ts("favorites")}
-          <span className="rounded-full bg-secondary px-2 py-0.5 text-xs font-semibold text-secondary-foreground">
+          <span className="rounded-sm bg-secondary px-2 py-0.5 text-xs font-semibold text-secondary-foreground">
             {items.length}
           </span>
         </SheetTitle>
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
-            <span className="flex size-16 items-center justify-center rounded-full bg-secondary/60">
+            <span className="flex size-16 items-center justify-center rounded-sm bg-secondary/60">
               <Heart className="size-7 text-primary" />
             </span>
             <p className="max-w-[16rem] text-sm text-muted-foreground">{ts("favEmpty")}</p>
             <Link
               href="/shop"
               onClick={() => setOpen(false)}
-              className="rounded-full bg-cta px-6 py-2.5 text-sm font-semibold text-cta-foreground"
+              className="rounded-sm bg-cta px-6 py-2.5 text-xs font-bold uppercase tracking-[0.15em] text-cta-foreground"
             >
               {ts("viewAll")}
             </Link>
@@ -46,12 +46,12 @@ export function FavoritesSheet() {
             {items.map((p) => (
               <li
                 key={p.id}
-                className="flex gap-3 rounded-2xl border border-border bg-card p-2.5"
+                className="flex gap-3 rounded-sm border border-border bg-card p-2.5"
               >
                 <Link
                   href={`/product/${p.slug}`}
                   onClick={() => setOpen(false)}
-                  className="size-20 shrink-0 overflow-hidden rounded-xl"
+                  className="size-20 shrink-0 overflow-hidden rounded-sm"
                 >
                   <ProductImage product={p} className="h-full w-full" />
                 </Link>
@@ -70,7 +70,7 @@ export function FavoritesSheet() {
                       <button
                         aria-label={t("addToCart")}
                         onClick={() => add(p)}
-                        className="flex h-8 items-center gap-1.5 rounded-full bg-cta px-3 text-xs font-semibold text-cta-foreground transition hover:bg-cta/90"
+                        className="flex h-8 items-center gap-1.5 rounded-sm bg-cta px-3 text-xs font-semibold text-cta-foreground transition hover:bg-cta/90"
                       >
                         <ShoppingBag className="size-3.5" />
                         {t("addToCart")}
@@ -78,7 +78,7 @@ export function FavoritesSheet() {
                       <button
                         aria-label={`Remove ${p.name}`}
                         onClick={() => remove(p.id)}
-                        className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition hover:bg-secondary/60 hover:text-foreground"
+                        className="flex size-8 items-center justify-center rounded-sm text-muted-foreground transition hover:bg-secondary/60 hover:text-foreground"
                       >
                         <Trash2 className="size-4" />
                       </button>

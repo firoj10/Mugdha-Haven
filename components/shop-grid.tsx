@@ -1,12 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { ProductCard } from "@/components/product-card";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import type { Category, Product } from "@/data/products";
 
 export function ShopGrid({
@@ -18,8 +16,6 @@ export function ShopGrid({
 }) {
   const t = useTranslations("shop");
   const params = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
 
   // The URL is the single source of truth, so links from the home page,
   // footer and search always stay in sync with the chips.
@@ -27,14 +23,6 @@ export function ShopGrid({
   const active: Category | "all" =
     fromUrl && categories.includes(fromUrl) ? fromUrl : "all";
   const q = (params.get("q") ?? "").trim().toLowerCase();
-
-  function setActive(c: Category | "all") {
-    const next = new URLSearchParams(params.toString());
-    if (c === "all") next.delete("category");
-    else next.set("category", c);
-    const qs = next.toString();
-    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-  }
 
   const filtered = useMemo(
     () =>
@@ -49,19 +37,12 @@ export function ShopGrid({
 
   return (
     <>
-      <div className="flex flex-wrap gap-2">
-        <Chip label={t("all")} active={active === "all"} onClick={() => setActive("all")} />
-        {categories.map((c) => (
-          <Chip key={c} label={c} active={active === c} onClick={() => setActive(c)} />
-        ))}
-      </div>
-
       {filtered.length === 0 ? (
         <p className="py-20 text-center text-muted-foreground">{t("empty")}</p>
       ) : (
         <motion.div
           layout
-          className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4"
+          className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((p, i) => (
@@ -80,27 +61,5 @@ export function ShopGrid({
         </motion.div>
       )}
     </>
-  );
-}
-
-function Chip({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <Button
-      type="button"
-      onClick={onClick}
-      size="sm"
-      variant={active ? "default" : "outline"}
-      className={cn(!active && "bg-card")}
-    >
-      {label}
-    </Button>
   );
 }

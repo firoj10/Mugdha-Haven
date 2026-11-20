@@ -19,7 +19,7 @@ const BANNERS = [
 ] as const;
 
 const arrow =
-  "absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-card/80 p-2 shadow transition-transform duration-500 hover:scale-105";
+  "absolute top-1/2 z-10 -translate-y-1/2 rounded-sm bg-card/85 p-2 shadow transition-transform duration-500 hover:scale-105";
 
 export function Hero() {
   const t = useTranslations("site");
@@ -36,7 +36,7 @@ export function Hero() {
       <div className="container py-8 md:py-14">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {/* Left: slider */}
-          <div className="relative overflow-hidden rounded-xl bg-secondary">
+          <div className="relative overflow-hidden rounded-md bg-secondary">
             <div className="relative aspect-[3/2] w-full">
               {SLIDES.map((sl, idx) => (
                 <Link
@@ -101,7 +101,7 @@ function Banner({
   alt: string;
 }) {
   return (
-    <Link href="/shop" className="group relative block flex-1 overflow-hidden rounded-xl">
+    <Link href="/shop" className="group relative block flex-1 overflow-hidden rounded-md">
       <Image
         src={b.src}
         alt={alt}
