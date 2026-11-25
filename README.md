@@ -1,8 +1,8 @@
-# Mugdha Haven — Storefront (frontend only)
+# Mugdha Haven — Storefront 
 
 Premium imported baby-care & cosmetics e-commerce storefront. Next.js App
 Router + TypeScript + Tailwind + shadcn/ui + Framer Motion + next-intl.
-No backend yet — a typed mock catalog and a thin service layer stand in for it.
+Needs the API in `../backend`.
 
 ## Run
 
@@ -21,7 +21,7 @@ components/          app components (Navbar, ProductCard, Hero, sections…)
 components/ui/       shadcn/ui primitives (button, sheet, input, badge, separator)
 components/motion.tsx  SmoothScroll + Reveal / Magnetic / Tilt / FlipCard
 lib/                 products service, cart state, utils
-data/products.ts     mock catalog (the only file the backend replaces)
+lib/types.ts         API data types
 locales/             en.json, bn.json
 i18n/request.ts      next-intl locale + messages (cookie-driven)
 ```
@@ -42,23 +42,17 @@ i18n/request.ts      next-intl locale + messages (cookie-driven)
   animated add-to-cart, and Lenis smooth scroll.
 - All transform-based (GPU) and gated by `prefers-reduced-motion`.
 
-## Connecting the Express backend later
+## Backend
 
-Only two things change — pages and components stay as they are:
+The API is a separate project in `../backend` (see its README). Start it first,
+then `npm run dev` here. Next.js forwards `/api/*` to `API_URL`
+(default `http://localhost:4000`).
 
-1. **`lib/products.ts`** — each function already has the `fetch(...)` call
-   commented in. Swap the mock return for the real request; the signatures and
-   the `Product` shape don't change.
-2. **`data/products.ts`** — delete once the API is live (keep the exported
-   `Product` / `Category` types, or move them to `lib/`).
+- `lib/products.ts` — catalog for server components
+- `lib/api.ts`, `lib/auth.tsx` — browser requests, session and permissions
+- `/login`, `/register`, `/account`, `/admin`
 
-Other backend touch-points are marked with `// TODO` comments: newsletter
-signup (`components/newsletter.tsx`) and cart checkout (`components/cart-view.tsx`).
-
-**Product images:** mock products have no `image`, so a styled placeholder
-renders. Set `image` to a URL in the catalog and add the host to
-`images.remotePatterns` in `next.config.mjs` — `ProductImage` already handles both.
-
+Not connected yet: the newsletter and footer subscribe forms.
 ## Brand palette
 
 Beige `#F4EFE7` · Brown `#847563` · Charcoal `#292929` · Cream `#D8C7B2`

@@ -14,7 +14,7 @@ import { ProductImage } from "@/components/product-image";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { cn, formatPrice } from "@/lib/utils";
-import type { Product } from "@/data/products";
+import type { Product } from "@/lib/types";
 
 export function QuickView({
   product,

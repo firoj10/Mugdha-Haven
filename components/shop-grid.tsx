@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { ProductCard } from "@/components/product-card";
-import type { Category, Product } from "@/data/products";
+import type { Category, Product } from "@/lib/types";
 
 export function ShopGrid({
   products,

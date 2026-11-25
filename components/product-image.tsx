@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Product } from "@/data/products";
+import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 // Shows the original product photo as-is; falls back to a tinted placeholder.

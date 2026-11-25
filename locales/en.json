@@ -85,7 +85,7 @@
     "checkout": "Checkout",
     "remove": "Remove",
     "qty": "Qty",
-    "note": "Checkout connects to the backend later — this is a front-end preview."
+    "note": "Cash on delivery. The final price is confirmed by the server."
   },
   "about": {
     "title": "Our story",
@@ -151,5 +151,40 @@
     "quickView": "Quick view",
     "viewDetails": "View full details",
     "categoriesMenu": "Categories"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "registerTitle": "Create account",
+    "name": "Your name",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 10 characters",
+    "login": "Login",
+    "register": "Register",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "wait": "Please wait…",
+    "logout": "Logout",
+    "account": "My account",
+    "admin": "Admin panel",
+    "heroTitle": "Gentle care, managed with confidence.",
+    "heroText": "Sign in to track your orders, keep your favorites and manage your store.",
+    "secure": "Protected with secure sessions",
+    "backToStore": "Back to store",
+    "loginSub": "Welcome back. Enter your details to continue.",
+    "registerSub": "Join Mugdha Haven in less than a minute.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "checkout": {
+    "name": "Full name",
+    "phone": "Mobile number",
+    "address": "Address",
+    "city": "City",
+    "note": "Note (optional)",
+    "place": "Place order",
+    "placing": "Placing order…",
+    "done": "Order placed!",
+    "orderNo": "Your order number"
   }
 }

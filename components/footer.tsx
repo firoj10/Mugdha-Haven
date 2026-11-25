@@ -1,11 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
-import { products } from "@/data/products";
-
-const CATEGORIES = [...new Set(products.map((p) => p.category))];
+import { useCategories } from "@/lib/categories";
 
 export function Footer() {
+  const categories = useCategories();
   const t = useTranslations();
   const year = new Date().getFullYear();
   const head = "mb-4 font-sans text-lg font-semibold";
@@ -30,7 +31,7 @@ export function Footer() {
           <div>
             <h4 className={head}>{t("footer.categories")}</h4>
             <ul className={list}>
-              {CATEGORIES.map((c) => (
+              {categories.map((c) => (
                 <li key={c}>
                   <Link href={`/shop?category=${encodeURIComponent(c)}`} className={a}>
                     {c}

@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { CheckoutForm } from "@/components/checkout-form";
 import { ProductImage } from "@/components/product-image";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -11,7 +13,23 @@ import { formatPrice } from "@/lib/utils";
 
 export function CartView() {
   const t = useTranslations("cart");
+  const tc = useTranslations("checkout");
   const { items, subtotal, setQty, remove } = useCart();
+  const [orderNo, setOrderNo] = useState("");
+
+  if (orderNo) {
+    return (
+      <div role="status" className="flex flex-col items-center gap-3 py-24 text-center">
+        <p className="text-2xl font-semibold">{tc("done")}</p>
+        <p>
+          {tc("orderNo")}: <strong>{orderNo}</strong>
+        </p>
+        <Button asChild>
+          <Link href="/shop">{t("continue")}</Link>
+        </Button>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -87,10 +105,7 @@ export function CartView() {
           <span className="text-lg font-semibold">{formatPrice(subtotal)}</span>
         </div>
         <Separator className="my-4" />
-        {/* TODO: wire checkout to the backend order endpoint. */}
-        <Button className="w-full" size="lg">
-          {t("checkout")}
-        </Button>
+        <CheckoutForm onPlaced={setOrderNo} />
         <p className="mt-3 text-xs text-muted-foreground">{t("note")}</p>
       </aside>
     </div>

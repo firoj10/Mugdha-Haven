@@ -1,44 +1,37 @@
-import { products, type Category, type Product } from "@/data/products";
+// Catalog service used by server components. Browser code uses lib/api.ts.
+import type { Category, Product } from "@/lib/types";
 
-// Thin service layer. Today it reads the mock array; later, swap each body for
-// a `fetch(`${API}/products...`)` call — the signatures stay the same, so no
-// page or component needs to change. Kept async on purpose for that reason.
+const API_URL = process.env.API_URL ?? "http://localhost:4000";
 
-const API_LATENCY = 0; // bump while testing loading states if you like
-
-function delay<T>(value: T): Promise<T> {
-  return API_LATENCY
-    ? new Promise((r) => setTimeout(() => r(value), API_LATENCY))
-    : Promise.resolve(value);
+async function load<T>(path: string): Promise<T | null> {
+  const res = await fetch(`${API_URL}/api${path}`, { cache: "no-store" });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} on ${path}`);
+  return res.json();
 }
+
+type List<T> = { data: T[] };
 
 export async function getProducts(): Promise<Product[]> {
-  // return fetch(`${process.env.API_URL}/products`).then((r) => r.json());
-  return delay(products);
+  return (await load<List<Product>>("/products?limit=100"))!.data;
 }
 
-export async function getProductBySlug(
-  slug: string
-): Promise<Product | undefined> {
-  // return fetch(`${process.env.API_URL}/products/${slug}`).then((r) => r.json());
-  return delay(products.find((p) => p.slug === slug));
+export async function getProductBySlug(slug: string): Promise<Product | undefined> {
+  const res = await load<{ data: Product }>(`/products/${encodeURIComponent(slug)}`);
+  return res?.data;
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
-  return delay(products.filter((p) => p.featured));
+  return (await load<List<Product>>("/products?featured=true&limit=100"))!.data;
 }
 
 export async function getCategories(): Promise<Category[]> {
-  return delay([...new Set(products.map((p) => p.category))]);
+  return (await load<List<{ name: string }>>("/categories"))!.data.map((c) => c.name);
 }
 
-export async function getRelatedProducts(
-  product: Product,
-  limit = 4
-): Promise<Product[]> {
-  return delay(
-    products
-      .filter((p) => p.category === product.category && p.id !== product.id)
-      .slice(0, limit)
+export async function getRelatedProducts(product: Product, limit = 4): Promise<Product[]> {
+  const res = await load<List<Product>>(
+    `/products/${encodeURIComponent(product.slug)}/related?limit=${limit}`
   );
+  return res?.data ?? [];
 }

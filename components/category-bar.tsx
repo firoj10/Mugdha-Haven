@@ -14,10 +14,10 @@ import {
   Waves,
   type LucideIcon,
 } from "lucide-react";
-import { products, type Category } from "@/data/products";
+import { useCategories } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 
-const ICONS: Record<Category, LucideIcon> = {
+const ICONS: Record<string, LucideIcon> = {
   Essence: FlaskConical,
   Cream: Sparkles,
   Serum: Droplets,
@@ -27,12 +27,11 @@ const ICONS: Record<Category, LucideIcon> = {
   "Eye Care": Eye,
 };
 
-const CATS = [...new Set(products.map((p) => p.category))] as Category[];
-
 // Always-visible category menu: every category is one click away.
 // Each item is a clear labelled button with an icon; the current one is filled.
 export function CategoryBar() {
   const t = useTranslations("shop");
+  const categories = useCategories();
   const pathname = usePathname();
   const params = useSearchParams();
   const onShop = pathname === "/shop";
@@ -56,7 +55,7 @@ export function CategoryBar() {
             {t("all")}
           </Link>
         </li>
-        {CATS.map((c) => {
+        {categories.map((c) => {
           const Icon = ICONS[c] ?? LayoutGrid;
           return (
             <li key={c}>

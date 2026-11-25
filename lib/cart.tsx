@@ -6,8 +6,9 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react";
-import type { Product } from "@/data/products";
+import type { Product } from "@/lib/types";
 
 // Client-only cart. State lives in React + localStorage. When the backend adds
 // real orders, this is where you'd sync to it — the UI talks only to useCart().
@@ -69,6 +70,8 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, dispatch] = useReducer(reducer, []);
 
+  const [hydrated, setHydrated] = useState(false);
+
   // Load once on mount.
   useEffect(() => {
     try {
@@ -77,12 +80,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* ignore corrupt storage */
     }
+    setHydrated(true);
   }, []);
 
-  // Persist on change.
+  // Persist on change, but never before the saved cart has been read: writing
+  // the initial empty list would erase it.
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+    if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items, hydrated]);
 
   const value = useMemo<CartContextValue>(() => {
     const count = items.reduce((n, i) => n + i.qty, 0);

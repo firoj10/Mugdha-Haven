@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import type { Product } from "@/data/products";
+import type { Product } from "@/lib/types";
 
 // Inline EN/BN toggle on the product page — independent of the site locale,
 // defaulting to it.

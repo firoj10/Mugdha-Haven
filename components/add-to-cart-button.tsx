@@ -6,7 +6,7 @@ import { Check, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import { Button, type ButtonProps } from "@/components/ui/button";
-import type { Product } from "@/data/products";
+import type { Product } from "@/lib/types";
 
 export function AddToCartButton({
   product,

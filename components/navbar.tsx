@@ -5,9 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Flame, Heart, Menu, Search, ShoppingBag, X } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { CategoryBar } from "@/components/category-bar";
+import { UserMenu } from "@/components/user-menu";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import {
   Sheet,
@@ -34,6 +36,17 @@ export function Navbar() {
   const t = useTranslations("nav");
   const ts = useTranslations("site");
   const pathname = usePathname();
+  const ta = useTranslations("auth");
+  const { user, permissions } = useAuth();
+  // Logged out: Login + Register. Logged in: Account, plus Admin for staff.
+  const first = user
+    ? { href: "/account", label: ta("account") }
+    : { href: "/login", label: ts("login") };
+  const second = !user
+    ? { href: "/register", label: ts("register") }
+    : permissions.length > 0
+      ? { href: "/admin", label: ta("admin") }
+      : null;
   const { count } = useCart();
   const wish = useWishlist();
   const [mounted, setMounted] = useState(false);
@@ -173,18 +186,24 @@ export function Navbar() {
             </Link>
 
             <span className="mx-3 hidden h-6 w-px bg-topbar-foreground/20 lg:block" />
-            <Link
-              href="/cart"
-              className="hidden px-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-topbar-foreground/90 transition hover:text-highlight lg:block"
-            >
-              {ts("login")}
-            </Link>
-            <Link
-              href="/cart"
-              className="ml-2 hidden h-10 items-center rounded-sm bg-highlight px-6 text-[12px] font-bold uppercase tracking-[0.2em] text-highlight-foreground transition hover:bg-highlight/85 lg:flex"
-            >
-              {ts("register")}
-            </Link>
+            {user ? (
+              <UserMenu dark />
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="hidden px-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-topbar-foreground/90 transition hover:text-highlight lg:block"
+                >
+                  {ts("login")}
+                </Link>
+                <Link
+                  href="/register"
+                  className="ml-2 hidden h-10 items-center rounded-sm bg-highlight px-6 text-[12px] font-bold uppercase tracking-[0.2em] text-highlight-foreground transition hover:bg-highlight/85 lg:flex"
+                >
+                  {ts("register")}
+                </Link>
+              </>
+            )}
 
             {/* Mobile menu */}
             <Sheet>
@@ -222,17 +241,19 @@ export function Navbar() {
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    href="/cart"
+                    href={first.href}
                     className="flex-1 rounded-sm border border-foreground py-2.5 text-center text-xs font-bold uppercase tracking-[0.2em]"
                   >
-                    {ts("login")}
+                    {first.label}
                   </Link>
+                  {second && (
                   <Link
-                    href="/cart"
+                    href={second.href}
                     className="flex-1 rounded-sm bg-cta py-2.5 text-center text-xs font-bold uppercase tracking-[0.2em] text-cta-foreground"
                   >
-                    {ts("register")}
+                    {second.label}
                   </Link>
+                  )}
                 </div>
                 <LanguageSwitcher />
               </SheetContent>

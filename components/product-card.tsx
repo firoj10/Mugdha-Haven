@@ -11,7 +11,7 @@ import { QuickView } from "@/components/quick-view";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { cn, formatPrice } from "@/lib/utils";
-import type { Product } from "@/data/products";
+import type { Product } from "@/lib/types";
 
 // Sizes let each section look different:
 //  lg — featured/favorites, md — shop grid (default), sm — compact

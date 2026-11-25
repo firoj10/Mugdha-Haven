@@ -4,7 +4,6 @@ import { ArrowLeft, Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import {
   getProductBySlug,
-  getProducts,
   getRelatedProducts,
 } from "@/lib/products";
 import { Tilt } from "@/components/motion";
@@ -14,11 +13,6 @@ import { AddToCartButton } from "@/components/add-to-cart-button";
 import { ProductCard } from "@/components/product-card";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice } from "@/lib/utils";
-
-export async function generateStaticParams() {
-  const products = await getProducts();
-  return products.map((p) => ({ slug: p.slug }));
-}
 
 export async function generateMetadata({
   params,
